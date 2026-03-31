@@ -65,6 +65,7 @@ body {
   gap: 10px;
 }
 
+/* FULLSCREEN */
 #fullOverlay {
   position: fixed;
   top: 0;
@@ -90,6 +91,7 @@ body {
   cursor: pointer;
 }
 
+/* BUTTONS */
 .full-btn {
   margin-top: 10px;
   width: 100%;
@@ -118,6 +120,7 @@ body {
   border: none;
 }
 
+/* POPUP */
 .popup {
   position: fixed;
   top: 0;
@@ -168,10 +171,11 @@ body {
   <div class="live">● LIVE</div>
 </div>
 
+<!-- PLAYER -->
 <div class="player">
   <iframe 
     id="mainPlayer"
-    src="https://player.kick.com/dillzy1234567?autoplay=true&muted=true"
+    src="https://player.kick.com/dillzy1234567?autoplay=true&muted=false"
     allow="autoplay; fullscreen; picture-in-picture"
     allowfullscreen>
   </iframe>
@@ -181,12 +185,13 @@ body {
   <div class="bottom">
     👥 <span id="viewerCount">0</span>
     <span style="color:lime;">●</span>
-    <span id="timer"></span>
+    <span id="timer">00:00:00</span>
   </div>
 </div>
 
 <button class="full-btn" onclick="openFull()">⛶ Fullscreen</button>
 
+<!-- TELEGRAM -->
 <div class="card">
   🔔 Follow us for Updates!
   <a href="https://t.me/cricmatchstream" target="_blank">
@@ -194,6 +199,7 @@ body {
   </a>
 </div>
 
+<!-- SHARE -->
 <div class="card">
   🔗 Copy Link & Share
   <button class="btn" onclick="sharePage()">❤️ Click Here To Share This Page Link</button>
@@ -201,11 +207,13 @@ body {
 
 </div>
 
+<!-- FULLSCREEN OVERLAY -->
 <div id="fullOverlay">
   <span class="closeFull" onclick="closeFull()">✖</span>
   <iframe id="fullPlayer"></iframe>
 </div>
 
+<!-- POPUP -->
 <div id="tgPopup" class="popup">
   <div class="popup-box">
     <h2>📢 Support Us!</h2>
@@ -220,7 +228,45 @@ body {
   </div>
 </div>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
 <script>
+// 🔴 ADD YOUR FIREBASE CONFIG HERE
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_DOMAIN",
+  databaseURL: "YOUR_DB_URL",
+  projectId: "YOUR_ID",
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// Viewer Counter
+const ref = db.ref("viewers");
+ref.transaction(c => (c || 0) + 1);
+
+window.addEventListener("beforeunload", () => {
+  ref.transaction(c => (c || 1) - 1);
+});
+
+ref.on("value", snap => {
+  document.getElementById("viewerCount").innerText = snap.val() || 0;
+});
+
+// Timer
+let sec = 0;
+setInterval(() => {
+  sec++;
+  let h = String(Math.floor(sec/3600)).padStart(2,'0');
+  let m = String(Math.floor((sec%3600)/60)).padStart(2,'0');
+  let s = String(sec%60).padStart(2,'0');
+  document.getElementById("timer").innerText = `${h}:${m}:${s}`;
+}, 1000);
+
+// Fullscreen overlay
 function openFull() {
   const src = document.getElementById("mainPlayer").src;
   document.getElementById("fullPlayer").src = src;
@@ -232,6 +278,7 @@ function closeFull() {
   document.getElementById("fullPlayer").src = "";
 }
 
+// Share
 function sharePage() {
   if (navigator.share) {
     navigator.share({
@@ -244,6 +291,7 @@ function sharePage() {
   }
 }
 
+// Popup
 if (!localStorage.getItem("tgShown")) {
   document.getElementById("tgPopup").style.display = "flex";
 } else {
