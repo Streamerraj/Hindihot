@@ -65,7 +65,6 @@ body {
   gap: 10px;
 }
 
-/* FULLSCREEN */
 #fullOverlay {
   position: fixed;
   top: 0;
@@ -172,7 +171,7 @@ body {
 <div class="player">
   <iframe 
     id="mainPlayer"
-    src="https://player.kick.com/dillzy123?autoplay=true&muted=true"
+    src="https://player.kick.com/dillzy1234567?autoplay=true&muted=true"
     allow="autoplay; fullscreen; picture-in-picture"
     allowfullscreen>
   </iframe>
@@ -182,7 +181,7 @@ body {
   <div class="bottom">
     👥 <span id="viewerCount">0</span>
     <span style="color:lime;">●</span>
-    <span id="timer">00:00:00</span>
+    <span id="timer"></span>
   </div>
 </div>
 
@@ -202,13 +201,11 @@ body {
 
 </div>
 
-<!-- FULLSCREEN -->
 <div id="fullOverlay">
   <span class="closeFull" onclick="closeFull()">✖</span>
   <iframe id="fullPlayer"></iframe>
 </div>
 
-<!-- POPUP -->
 <div id="tgPopup" class="popup">
   <div class="popup-box">
     <h2>📢 Support Us!</h2>
@@ -224,7 +221,6 @@ body {
 </div>
 
 <script>
-// Fullscreen overlay
 function openFull() {
   const src = document.getElementById("mainPlayer").src;
   document.getElementById("fullPlayer").src = src;
@@ -236,7 +232,6 @@ function closeFull() {
   document.getElementById("fullPlayer").src = "";
 }
 
-// Share
 function sharePage() {
   if (navigator.share) {
     navigator.share({
@@ -249,7 +244,6 @@ function sharePage() {
   }
 }
 
-// Popup
 if (!localStorage.getItem("tgShown")) {
   document.getElementById("tgPopup").style.display = "flex";
 } else {
@@ -263,5 +257,4 @@ function closePopup() {
 </script>
 
 </body>
-</html>
 </html>
