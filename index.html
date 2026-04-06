@@ -5,127 +5,156 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Live Stream</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
 <style>
-*{box-sizing:border-box;}
-
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(#020617, #0b0f14);
-  color: #fff;
+  font-family: Arial;
+  background: linear-gradient(#0b0f14, #020617);
+  color: white;
 }
 
 .container {
-  max-width: 420px;
+  max-width: 900px;
   margin: auto;
   padding: 15px;
 }
 
 .header {
+  background: #0f172a;
+  border-radius: 15px;
+  padding: 15px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  background: #0f172a;
-  padding: 14px;
-  border-radius: 18px;
-  margin-bottom: 15px;
-  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .live {
-  background: linear-gradient(45deg, #7c3aed, #ec4899);
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: 13px;
-}
-
-.video-card {
-  background: #0f172a;
-  padding: 10px;
+  background: linear-gradient(90deg,#9333ea,#ec4899);
+  padding: 5px 12px;
   border-radius: 20px;
-  margin-bottom: 18px;
 }
 
-video {
+.player {
+  position: relative;
   width: 100%;
+  aspect-ratio: 16/9;
+  background: black;
   border-radius: 15px;
-  background: #000;
+  overflow: hidden;
 }
 
-/* Cards */
-.card {
-  background: #0f172a;
-  padding: 22px 18px;
-  border-radius: 20px;
-  margin-bottom: 18px;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.card h3 {
-  margin-bottom: 18px;
-  color: #9ca3af;
-}
-
-/* Buttons */
-.big-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+.player iframe {
+  position: absolute;
   width: 100%;
-  padding: 16px;
-  border-radius: 16px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-  text-decoration: none;
-  background: linear-gradient(90deg, #6366f1, #a855f7, #d946ef);
-  box-shadow: 0 4px 20px rgba(168,85,247,0.4);
+  height: 100%;
 }
 
-.back {
+.overlay2 {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.6);
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+#fullOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: none;
+  z-index: 99999;
+}
+
+#fullOverlay iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.closeFull {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 25px;
+  color: white;
+  cursor: pointer;
+}
+
+.full-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #111827;
+  color: white;
+}
+
+.card {
+  margin-top: 20px;
+  background: #0f172a;
+  padding: 20px;
+  border-radius: 15px;
   text-align: center;
-  opacity: 0.6;
 }
 
-/* Popup */
+.btn {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  background: linear-gradient(90deg,#6366f1,#d946ef);
+  font-weight: bold;
+  color: white;
+  border: none;
+}
+
 .popup {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0,0,0,0.8);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 999;
+  justify-content: center;
+  z-index: 9999;
 }
 
 .popup-box {
   width: 90%;
-  max-width: 360px;
-  background: #020617;
-  padding: 25px;
+  max-width: 350px;
+  background: #0f172a;
   border-radius: 20px;
+  padding: 25px;
   text-align: center;
-  box-shadow: 0 0 40px rgba(139,92,246,0.5);
 }
 
-.close {
-  position: absolute;
-  bottom: 25px;
-  right: 20px;
-  background: #0ea5e9;
+.join-btn, .close-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 12px;
   border: none;
   color: white;
-  font-size: 18px;
-  padding: 6px 12px;
-  border-radius: 10px;
-  cursor: pointer;
+}
+
+.join-btn {
+  background: linear-gradient(90deg,#6366f1,#d946ef);
+}
+
+.close-btn {
+  background: #1e293b;
 }
 </style>
 </head>
@@ -134,97 +163,75 @@ video {
 
 <div class="container">
 
-  <div class="header">
-    <div>@Cricmatchstream</div>
-    <div class="live">● LIVE</div>
-  </div>
+<div class="header">
+  <div>@cricmatchstream</div>
+  <div class="live">● LIVE</div>
+</div>
 
-  <div class="video-card">
-    <video id="video" controls playsinline></video>
-  </div>
+<div class="player">
+  <iframe 
+    id="mainPlayer"
+    src="https://player.kick.com/sayan01234?autoplay=true&muted=false"
+    allow="autoplay; fullscreen; picture-in-picture"
+    allowfullscreen>
+  </iframe>
 
-  <!-- TELEGRAM -->
-  <div class="card">
-    <h3>🔔 Follow us for Updates!</h3>
-    <a href="https://t.me/cricmatchstream" target="_blank" class="big-btn">
-      📩 Click Here To Join Telegram
-    </a>
-  </div>
+  <div class="overlay2">HD</div>
 
-  <!-- SHARE -->
-  <div class="card">
-    <h3>🔗 Copy Link & Share</h3>
-    <a href="#" onclick="sharePage()" class="big-btn">
-      🔗 Click Here To Share This Page Link
-    </a>
+  <div class="bottom">
+    👥 <span id="viewerCount">0</span>
+    <span style="color:lime;">●</span>
+    <span id="timer">00:00:00</span>
   </div>
+</div>
 
-  <div class="back">← Back to All Streams</div>
+<button class="full-btn" onclick="openFull()">⛶ Fullscreen</button>
+
+<div class="card">
+  🔔 Follow us for Updates!
+  <a href="https://t.me/cricmatchstream" target="_blank">
+    <div class="btn">📢 Click Here To Join Telegram</div>
+  </a>
+</div>
+
+<div class="card">
+  🔗 Copy Link & Share
+  <button class="btn" onclick="sharePage()">❤️ Click Here To Share This Page Link</button>
+</div>
 
 </div>
 
-<!-- POPUP -->
-<div class="popup" id="popup">
+<div id="fullOverlay">
+  <span class="closeFull" onclick="closeFull()">✖</span>
+  <iframe id="fullPlayer"></iframe>
+</div>
+
+<div id="tgPopup" class="popup">
   <div class="popup-box">
     <h2>📢 Support Us!</h2>
-    <p>Join our Telegram channel<br><b>@cricmatchstream</b></p>
+    <p>Join our Telegram channel</p>
+    <h3>@cricmatchstream</h3>
 
-    <a href="https://t.me/cricmatchstream" target="_blank" class="big-btn">Join Now</a>
-    <br><br>
-    <button onclick="closePopup()" class="big-btn" style="background:#1f2937;border:none;">
-      Already Joined
-    </button>
+    <a href="https://t.me/cricmatchstream" target="_blank">
+      <button class="join-btn">Join Now</button>
+    </a>
+
+    <button class="close-btn" onclick="closePopup()">Already Joined</button>
   </div>
-
-  <button class="close" onclick="closePopup()">✕</button>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
 <script>
-const video = document.getElementById('video');
-const videoSrc = "https://dillzy-stream.sayanwork-studioo.workers.dev/live/abc123.m3u8";
-
-/* ADVANCED HLS FIX */
-if (Hls.isSupported()) {
-  const hls = new Hls({
-    debug: false,
-    enableWorker: true,
-    lowLatencyMode: true
-  });
-
-  hls.loadSource(videoSrc);
-  hls.attachMedia(video);
-
-  hls.on(Hls.Events.MANIFEST_PARSED, function () {
-    video.play().catch(() => {
-      video.muted = true;
-      video.play();
-    });
-  });
-
-  /* ERROR HANDLING */
-  hls.on(Hls.Events.ERROR, function (event, data) {
-    if (data.fatal) {
-      switch (data.type) {
-        case Hls.ErrorTypes.NETWORK_ERROR:
-          hls.startLoad();
-          break;
-        case Hls.ErrorTypes.MEDIA_ERROR:
-          hls.recoverMediaError();
-          break;
-        default:
-          hls.destroy();
-          break;
-      }
-    }
-  });
-
-} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-  video.src = videoSrc;
+function openFull() {
+  const src = document.getElementById("mainPlayer").src;
+  document.getElementById("fullPlayer").src = src;
+  document.getElementById("fullOverlay").style.display = "block";
 }
 
-/* Share */
+function closeFull() {
+  document.getElementById("fullOverlay").style.display = "none";
+  document.getElementById("fullPlayer").src = "";
+}
+
 function sharePage() {
   if (navigator.share) {
     navigator.share({
@@ -232,28 +239,21 @@ function sharePage() {
       url: window.location.href
     });
   } else {
-    alert("Copy this link: " + window.location.href);
+    navigator.clipboard.writeText(window.location.href);
+    alert("Link Copied!");
   }
 }
 
-/* Popup */
+if (!localStorage.getItem("tgShown")) {
+  document.getElementById("tgPopup").style.display = "flex";
+} else {
+  document.getElementById("tgPopup").style.display = "none";
+}
+
 function closePopup() {
-  document.getElementById("popup").style.display = "none";
-  localStorage.setItem("popupClosed", "true");
+  document.getElementById("tgPopup").style.display = "none";
+  localStorage.setItem("tgShown", "yes");
 }
-
-window.onload = function() {
-  if(localStorage.getItem("popupClosed") === "true") {
-    document.getElementById("popup").style.display = "none";
-  }
-}function welcome() {
-        window.open("https://t.me/cricmatchstream");
-      }
-        const message = "JOIN OUR TELEGRAM CHANNEL FOR MORE LIVE STREAM LINKS";
-        if (confirm(message)) {
-            window.location.href = "https://t.me/cricmatchstream";
-        }
-  
 </script>
 
 </body>
