@@ -65,6 +65,7 @@ body {
   gap: 10px;
 }
 
+/* FULLSCREEN */
 #fullOverlay {
   position: fixed;
   top: 0;
@@ -90,6 +91,7 @@ body {
   cursor: pointer;
 }
 
+/* BUTTON */
 .full-btn {
   margin-top: 10px;
   width: 100%;
@@ -100,6 +102,7 @@ body {
   color: white;
 }
 
+/* CARD */
 .card {
   margin-top: 20px;
   background: #0f172a;
@@ -118,6 +121,7 @@ body {
   border: none;
 }
 
+/* POPUP */
 .popup {
   position: fixed;
   top: 0;
@@ -168,6 +172,7 @@ body {
   <div class="live">● LIVE</div>
 </div>
 
+<!-- PLAYER -->
 <div class="player">
   <iframe 
     id="mainPlayer"
@@ -179,14 +184,13 @@ body {
   <div class="overlay2">HD</div>
 
   <div class="bottom">
-    👥 <span id="viewerCount">0</span>
-    <span style="color:lime;">●</span>
-    <span id="timer">00:00:00</span>
+    👥 LIVE
   </div>
 </div>
 
 <button class="full-btn" onclick="openFull()">⛶ Fullscreen</button>
 
+<!-- TELEGRAM -->
 <div class="card">
   🔔 Follow us for Updates!
   <a href="https://t.me/cricmatchstream" target="_blank">
@@ -194,18 +198,21 @@ body {
   </a>
 </div>
 
+<!-- SHARE -->
 <div class="card">
-  🔗 Copy Link & Share
-  <button class="btn" onclick="sharePage()">❤️ Click Here To Share This Page Link</button>
+  🔗 Share this page
+  <button class="btn" onclick="sharePage()">❤️ Share Now</button>
 </div>
 
 </div>
 
+<!-- FULLSCREEN -->
 <div id="fullOverlay">
   <span class="closeFull" onclick="closeFull()">✖</span>
   <iframe id="fullPlayer"></iframe>
 </div>
 
+<!-- POPUP -->
 <div id="tgPopup" class="popup">
   <div class="popup-box">
     <h2>📢 Support Us!</h2>
@@ -258,3 +265,4 @@ function closePopup() {
 
 </body>
 </html>
+            "400131994b445d8c8817202248760fda": "2d56cb6f07a75b9aff165d534ae2bfc4"
